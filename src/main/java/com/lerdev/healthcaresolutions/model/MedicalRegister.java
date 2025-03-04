@@ -1,6 +1,7 @@
 package com.lerdev.healthcaresolutions.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,10 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.*;
 import java.util.Date;
-import java.util.Date;
-import java.util.Set;
-import java.util.HashSet;
 
 @Entity
 @Getter
@@ -24,13 +23,14 @@ public class MedicalRegister {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private Patient patient;
+
 
     @Column(nullable = false)
     private LocalDate registerDate;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "medicalRegister")
-    private Set<Diagnostic> diagnostics = new HashSet<>();
+    @JsonManagedReference
+    private List<Diagnostic> diagnostics = new ArrayList<>();
 }

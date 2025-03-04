@@ -1,12 +1,16 @@
 package com.lerdev.healthcaresolutions.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,12 +25,13 @@ public class Diagnostic {
     private Long id;
     private String description;
     private String observations;
-    private String diagnosticDate;
+    private LocalDate diagnosticDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medical_register_id")
+    @JoinColumn(name = "medical_register_id", nullable = false)
+    @JsonBackReference
     private MedicalRegister medicalRegister;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "diagnostic")
-    private Set<Treatment> treatments = new HashSet<>();
+    private List<Treatment> treatments = new ArrayList<>();
 }

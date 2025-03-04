@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,9 +23,9 @@ public class Treatment {
     @Column(nullable = false)
     private String observations;
     @Column(nullable = false)
-    private String startDate;
+    private LocalDate startDate;
     @Column(nullable = false)
-    private String endDate;
+    private LocalDate endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diagnostic_id")
